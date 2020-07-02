@@ -6,6 +6,9 @@ import core
 
 
 class ArgParser(argparse.ArgumentParser):
+    """
+    Class for print help message when arguments doesn't given
+    """
     def error(self, message):
         sys.stderr.write('error: %s\n' % message)
         self.print_help()
@@ -13,6 +16,11 @@ class ArgParser(argparse.ArgumentParser):
 
 
 def init_parser() -> argparse.ArgumentParser:
+    """
+    Init arguments parser
+
+    :return:
+    """
     parser = ArgParser(description=config.DESCRIPTION)
     parser.add_argument("-p", help="path to the directory", type=str, required=True)
     parser.add_argument("-i", action="store_true", help="install parsed packages")
@@ -22,6 +30,12 @@ def init_parser() -> argparse.ArgumentParser:
 
 
 def args_parser(args: argparse.Namespace):
+    """
+    Parsing given arguments
+
+    :param args:
+    :return:
+    """
     if len(sys.argv) == 1:
         PARSER.print_help(sys.stderr)
     else:

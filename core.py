@@ -15,6 +15,12 @@ _IMPORT_REGEX = re.compile(r"^(?:from (\S*) import \S*|import (\S*))")
 
 
 def _pip_installer(package: str) -> int:
+    """
+    Install python package with pip
+
+    :param package:
+    :return:
+    """
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", package], stdout=subprocess.PIPE,
                               stderr=subprocess.PIPE,
@@ -26,14 +32,32 @@ def _pip_installer(package: str) -> int:
 
 
 def _is_std_lib(import_name: str) -> bool:
+    """
+    Check is package from standard python lib
+
+    :param import_name:
+    :return:
+    """
     return import_name in _STD_LIBS
 
 
 def _is_lib_already_installed(package: str) -> bool:
+    """
+    Check is package already installed
+
+    :param package:
+    :return:
+    """
     return package in sys.modules.keys()
 
 
 def _get_python_files(dir_path: str) -> List[Dict]:
+    """
+    Get all python files from directory
+
+    :param dir_path:
+    :return:
+    """
     py_files = []
     if os.path.exists(dir_path):
         for directory in os.walk(dir_path):
@@ -48,6 +72,13 @@ def _get_python_files(dir_path: str) -> List[Dict]:
 
 
 def _get_py_files_imports(py_files: List[Dict], wo_flag: bool) -> List[Dict]:
+    """
+    Get imports from python files
+
+    :param py_files:
+    :param wo_flag:
+    :return:
+    """
     imports = []
     temp_imports_set = set()
     for file_info in py_files:
@@ -73,12 +104,25 @@ def _get_py_files_imports(py_files: List[Dict], wo_flag: bool) -> List[Dict]:
 
 
 def get_imports(dir_path: str, wo_flag: bool) -> List[Dict]:
+    """
+    Parsing directory and return python file imports
+
+    :param dir_path:
+    :param wo_flag:
+    :return:
+    """
     py_files = _get_python_files(dir_path)
     imports = _get_py_files_imports(py_files, wo_flag)
     return imports
 
 
 def install_libs(imports: List[Dict]):
+    """
+    Install python packages
+
+    :param imports:
+    :return:
+    """
     print(f"\nStart install {len(imports)} packages")
     installed_counter = 0
     for import_info in imports:
