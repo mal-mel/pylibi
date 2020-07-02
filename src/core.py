@@ -6,9 +6,7 @@ import sys
 import re
 import os
 
-import helpers
-import config
-
+from src import helpers, config
 
 _STD_LIBS = stdlib_list(config.PYTHON_VERSION)
 _IMPORT_REGEX = re.compile(r"^(?:from (\S*) import \S*|import (\S*))")

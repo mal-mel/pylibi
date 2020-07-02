@@ -1,8 +1,7 @@
 import argparse
 import sys
 
-import config
-import core
+from src import config, core
 
 
 class ArgParser(argparse.ArgumentParser):
